@@ -8,7 +8,9 @@ const logger = morgan('tiny')
 const app = express()
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-
+io.on('connection', (socket) => {
+  io.emit('44', { hello: '你好' })
+})
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cors())
