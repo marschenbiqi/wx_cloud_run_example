@@ -39,11 +39,11 @@ app.post('/api/count', async (req, res) => {
 
 // 获取计数
 app.get('/api/count', async (req, res) => {
-  const result = await Counter.count()
-  io.emit('44', { count: result })
+  // const result = await Counter.count()
+  io.emit('44', { count: 22 })
   res.send({
     code: 0,
-    data: result
+    data: 22
   })
 })
 
@@ -59,11 +59,11 @@ app.get('/api/wx_openid', async (req, res) => {
 const port = process.env.PORT || 80
 
 async function bootstrap() {
-  await initDB()
+  // await initDB()
   app.start = app.listen = function () {
     return server.listen.apply(server, arguments)
   }
-
+  console.log('server start port', port)
   app.start(port)
 }
 
