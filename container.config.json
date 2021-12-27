@@ -9,9 +9,9 @@
   "policyType": "cpu",
   "policyThreshold": 80,
   "envParams": {
-    "MYSQL_ADDRESS": "{{env.MYSQL_ADDRESS}}",
-    "MYSQL_PASSWORD": "{{env.MYSQL_PASSWORD}}",
-    "MYSQL_USERNAME": "{{env.MYSQL_USERNAME}}"
+    "MYSQL_ADDRESS": "10.0.224.5:3306",
+    "MYSQL_PASSWORD": "Bp8gQ_MG",
+    "MYSQL_USERNAME": "root"
   },
   "customLogs": "stdout",
   "initialDelaySeconds": 2,
