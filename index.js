@@ -5,12 +5,14 @@ const morgan = require('morgan')
 const { init: initDB, Counter } = require('./db')
 
 const logger = morgan('tiny')
-const app = express()
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
-io.on('connection', (socket) => {
-  io.emit('44', { hello: '你好' })
-})
+var app = express();
+var expressWs = require('express-ws')(app);
+
+let clients = expressWs.getWss('/').clients
+app.ws('/', function (ws, req) { });
+
+
+
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cors())
@@ -18,6 +20,7 @@ app.use(logger)
 
 // 首页
 app.get('/', async (req, res) => {
+
   res.sendFile(path.join(__dirname, 'index.html'))
 })
 
@@ -31,6 +34,9 @@ app.post('/api/count', async (req, res) => {
       truncate: true
     })
   }
+  for (let c of clients) {
+    c.send(await Counter.count())
+  }
   res.send({
     code: 0,
     data: await Counter.count()
@@ -40,7 +46,6 @@ app.post('/api/count', async (req, res) => {
 // 获取计数
 app.get('/api/count', async (req, res) => {
   const result = await Counter.count()
-  io.emit('44', { count: result })
   res.send({
     code: 0,
     data: result
@@ -59,12 +64,10 @@ app.get('/api/wx_openid', async (req, res) => {
 const port = process.env.PORT || 80
 
 async function bootstrap() {
-  await initDB()
-  app.start = app.listen = function () {
-    return server.listen.apply(server, arguments)
-  }
-  console.log('server start port', port)
-  app.start(port)
+  // await initDB()
+  app.listen(port, () => {
+    console.log('启动成功', port)
+  })
 }
 
 bootstrap();
