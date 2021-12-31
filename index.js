@@ -5,10 +5,10 @@ const morgan = require('morgan')
 const { init: initDB, Counter } = require('./db')
 
 const logger = morgan('tiny')
-var app = express();
-var expressWs = require('express-ws')(app);
+const app = express();
+const expressWs = require('express-ws')(app);
 
-let clients = expressWs.getWss('/').clients
+const clients = expressWs.getWss('/').clients
 app.ws('/', function (ws, req) { });
 
 
