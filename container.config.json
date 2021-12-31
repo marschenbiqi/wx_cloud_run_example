@@ -8,11 +8,7 @@
   "mem": 2,
   "policyType": "cpu",
   "policyThreshold": 80,
-  "envParams": {
-    "MYSQL_ADDRESS": "10.0.224.5:3306",
-    "MYSQL_PASSWORD": "Bp8gQ_MG",
-    "MYSQL_USERNAME": "root"
-  },
+  "envParams": {},
   "customLogs": "stdout",
   "initialDelaySeconds": 2,
   "dataBaseName": "nodejs_demo",
